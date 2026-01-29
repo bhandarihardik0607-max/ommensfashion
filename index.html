@@ -259,38 +259,49 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Global environment variables
+        // Environment Variables
         const firebaseConfig = JSON.parse(__firebase_config);
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-        // Init Firebase
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        let user = null;
+        let currentUser = null;
         let allLeads = [];
+        let leadsUnsubscribe = null;
 
-        // Auth Setup
+        // Authentication Flow (Mandatory Pattern)
         const initAuth = async () => {
             try {
-                await signInAnonymously(auth);
-            } catch (e) {
-                console.error("Auth error", e);
+                if (initialToken) {
+                    await signInWithCustomToken(auth, initialToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Auth initialization failed:", error);
+                // Fallback attempt
+                try { await signInAnonymously(auth); } catch(e) {}
             }
         };
-        initAuth();
 
-        onAuthStateChanged(auth, (u) => {
-            user = u;
-            if (user && document.getElementById('leadsPanel').classList.contains('hidden') === false) {
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            // If the admin panel is already visible, start listener
+            if (user && !document.getElementById('leadsPanel').classList.contains('hidden')) {
                 startLeadListener();
             }
         });
 
-        // Icon Init
+        // Start Authentication process
+        initAuth();
+
+        // Icon Initialization
         lucide.createIcons();
 
         // Helpers
@@ -306,7 +317,12 @@
         // Lead Submission
         document.getElementById('leadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!user) return showToast("Connecting to cloud... try again");
+            
+            // Critical check: Ensure user is authenticated before writing
+            if (!currentUser) {
+                showToast("Still connecting... please wait a second.");
+                return;
+            }
             
             triggerHaptic();
             const submitBtn = document.getElementById('submitBtn');
@@ -322,9 +338,11 @@
             };
 
             try {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'leads'), lead);
+                // Ensure path follows mandatory rules
+                const leadsRef = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
+                await addDoc(leadsRef, lead);
                 
-                // Switch UI
+                // Transition UI on success
                 const gate = document.getElementById('gatekeeper');
                 const dash = document.getElementById('dashboard');
                 gate.classList.add('fade-out');
@@ -332,16 +350,17 @@
                     gate.style.display = 'none';
                     dash.style.display = 'block';
                     setTimeout(() => dash.classList.add('fade-in'), 50);
+                    showToast("Access Unlocked!");
                 }, 600);
             } catch (err) {
-                console.error(err);
-                showToast("Connection error. Try again.");
+                console.error("Database Write Error:", err);
+                showToast("Connection error. Please try again.");
                 submitBtn.disabled = false;
                 btnText.textContent = "ENTER DASHBOARD";
             }
         });
 
-        // Admin Logic
+        // Admin Security & View
         window.openAdminPrompt = () => {
             const modal = document.getElementById('adminModal');
             modal.style.display = 'flex';
@@ -360,17 +379,21 @@
                 closeAdminModal();
                 document.getElementById('leadsPanel').classList.remove('hidden');
                 startLeadListener();
-                showToast("Logged into Cloud DB");
+                showToast("Admin Session Started");
             } else {
                 triggerHaptic();
-                showToast("Invalid PIN");
+                showToast("Incorrect PIN");
             }
         };
 
         function startLeadListener() {
-            if (!user) return;
-            const q = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
-            onSnapshot(q, (snapshot) => {
+            // Guard: Must be authenticated and not already listening
+            if (!currentUser || leadsUnsubscribe) return;
+
+            const leadsRef = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
+            
+            // Simple query only (no complex filters to avoid index requirements)
+            leadsUnsubscribe = onSnapshot(leadsRef, (snapshot) => {
                 allLeads = snapshot.docs.map(doc => doc.data())
                     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
                 
@@ -379,57 +402,76 @@
                 count.textContent = `Total Leads: ${allLeads.length}`;
                 
                 if (allLeads.length === 0) {
-                    list.innerHTML = "No leads found in cloud.";
+                    list.innerHTML = `<div class="py-4 text-center opacity-30">No leads found in cloud database.</div>`;
                 } else {
                     list.innerHTML = allLeads.map(l => `
-                        <div class="border-b border-white/5 pb-2">
+                        <div class="border-b border-white/5 pb-2 animate-pulse-once">
                             <div class="text-violet-400 font-bold">${l.name}</div>
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-200">${l.phone}</span>
-                                <span class="opacity-30 text-[8px]">${new Date(l.timestamp).toLocaleDateString()}</span>
+                                <span class="opacity-30 text-[8px] uppercase">${new Date(l.timestamp).toLocaleDateString()}</span>
                             </div>
                         </div>
                     `).join('');
                 }
             }, (error) => {
-                console.error("Listener error", error);
+                console.error("Firestore Snapshot Error:", error);
+                showToast("Error syncing leads.");
             });
         }
 
+        window.logoutAdmin = () => {
+            if (leadsUnsubscribe) {
+                leadsUnsubscribe();
+                leadsUnsubscribe = null;
+            }
+            document.getElementById('leadsPanel').classList.add('hidden');
+            showToast("Admin Panel Closed");
+        };
+
         window.exportLeads = () => {
-            if (allLeads.length === 0) return showToast("No leads to export");
-            let csv = "Name,Phone,Date\n";
+            if (allLeads.length === 0) return showToast("No leads available for export.");
+            let csv = "Name,Phone,Date Submitted\n";
             allLeads.forEach(l => csv += `"${l.name}","${l.phone}","${l.timestamp}"\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `Leads_Vinod_Yadav.csv`;
+            a.download = `Leads_OmMensFashion_${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
-        };
-
-        window.logoutAdmin = () => {
-            document.getElementById('leadsPanel').classList.add('hidden');
+            window.URL.revokeObjectURL(url);
         };
 
         window.downloadVCard = () => {
             triggerHaptic();
-            const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Vinod Yadav - Om Mens Fashion\nTEL;TYPE=WORK,VOICE:+917793036608\nEND:VCARD`;
+            const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Vinod Yadav - Om Mens Fashion\nTEL;TYPE=WORK,VOICE:+917793036608\nNOTE:Owner of Om Mens Fashion\nEND:VCARD`;
             const blob = new Blob([vcard], { type: 'text/vcard' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Vinod_Yadav.vcf';
+            a.download = 'Vinod_Yadav_OM.vcf';
             a.click();
+            window.URL.revokeObjectURL(url);
         };
 
         window.shareCard = async () => {
             triggerHaptic();
             if (navigator.share) {
-                await navigator.share({ title: 'Om Mens Fashion', url: window.location.href });
+                try {
+                    await navigator.share({ 
+                        title: 'Om Mens Fashion', 
+                        text: 'Connect with Om Mens Fashion by Vinod Yadav.',
+                        url: window.location.href 
+                    });
+                } catch (e) {}
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                showToast("Link copied!");
+                const temp = document.createElement('input');
+                document.body.appendChild(temp);
+                temp.value = window.location.href;
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                showToast("Link copied to clipboard!");
             }
         };
     </script>
