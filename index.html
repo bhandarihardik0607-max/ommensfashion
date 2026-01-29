@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect with Om Mens Fashion | Mr. Vinod Yadav</title>
+    
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="Om Mens Fashion - Smart Digital Card">
+    <meta property="og:description" content="Premium Men's Wear by Vinod Yadav. Connect with us for exclusive styling.">
+    <meta property="og:type" content="website">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --neon-violet: #8b5cf6;
+            --neon-gold: #fbbf24;
+            --bg-dark: #0a0a0c;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            overflow-x: hidden;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        h1, h2, .font-display {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, rgba(139, 92, 246, 0.15) 0%, rgba(10, 10, 12, 1) 70%);
+            z-index: -1;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+
+        .neon-border-violet {
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-action {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-action:active {
+            transform: scale(0.95);
+        }
+
+        .fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            transition: all 0.6s ease;
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            pointer-events: auto !important;
+        }
+
+        #dashboard, #adminModal {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            display: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-anim {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        input {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--neon-violet) !important;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2) !important;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+    <div class="bg-glow"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="w-full max-w-md relative">
+        
+        <!-- SECTION 1: THE GATEKEEPER UI -->
+        <div id="gatekeeper" class="transition-all duration-700">
+            <div class="text-center mb-8">
+                <div class="w-24 h-24 bg-gradient-to-tr from-violet-600 to-amber-400 rounded-full mx-auto mb-4 flex items-center justify-center shadow-2xl">
+                    <span class="text-3xl font-bold tracking-tighter">OM</span>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tighter uppercase mb-2">Om Mens Fashion</h1>
+                <p class="text-gray-400 text-sm">Experience the pinnacle of Urban Luxury</p>
+            </div>
+
+            <div class="glass p-8 neon-border-violet">
+                <h2 class="text-xl font-semibold mb-6 text-center">Unlock Exclusive Access</h2>
+                <form id="leadForm" class="space-y-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-500 mb-1 ml-1">Full Name</label>
+                        <input type="text" id="userName" required placeholder="Enter your name" class="w-full px-4 py-3 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-500 mb-1 ml-1">Phone Number</label>
+                        <input type="tel" id="userPhone" required placeholder="+91 00000 00000" class="w-full px-4 py-3 rounded-xl text-sm">
+                    </div>
+                    <button type="submit" class="w-full bg-violet-600 hover:bg-violet-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-violet-900/20 transition-all mt-4 flex items-center justify-center gap-2 group">
+                        ENTER DASHBOARD
+                        <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </form>
+                <p class="text-[10px] text-center text-gray-600 mt-6 uppercase tracking-tighter">By entering, you agree to receive updates via WhatsApp.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 2: THE DIGITAL CARD DASHBOARD -->
+        <div id="dashboard" class="transition-all duration-700">
+            <!-- Glassmorphism "Credit Card" style -->
+            <div class="glass p-6 mb-6 relative overflow-hidden float-anim neon-border-violet">
+                <div class="absolute top-0 right-0 p-4 opacity-20">
+                    <i data-lucide="layers" class="w-20 h-20"></i>
+                </div>
+                
+                <div class="flex justify-between items-start mb-12">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-violet-400 font-bold">Premium Member</p>
+                        <h2 class="text-2xl font-black uppercase tracking-tight">Om Mens Fashion</h2>
+                    </div>
+                    <div class="text-amber-400">
+                        <i data-lucide="award" class="w-8 h-8"></i>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Store Owner</p>
+                    <p class="text-xl font-display font-semibold tracking-wide">Mr. Vinod Yadav</p>
+                </div>
+
+                <div class="mt-8 flex justify-between items-end">
+                    <div class="text-[10px] text-gray-500 font-mono">
+                        SERIAL: VIN-YADAV-001
+                    </div>
+                    <div class="flex gap-1">
+                        <div class="w-8 h-5 bg-violet-500/20 rounded-sm"></div>
+                        <div class="w-8 h-5 bg-amber-500/20 rounded-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Grid -->
+            <div class="grid grid-cols-2 gap-4">
+                <a href="https://wa.me/917793036608?text=Hey%20Om%20Mens%20Fashion" 
+                   onclick="triggerHaptic()"
+                   class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group">
+                    <i data-lucide="message-circle" class="w-6 h-6 text-green-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs font-semibold uppercase tracking-wider">WhatsApp</span>
+                </a>
+                
+                <a href="tel:+917793036608" 
+                   onclick="triggerHaptic()"
+                   class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group">
+                    <i data-lucide="phone" class="w-6 h-6 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs font-semibold uppercase tracking-wider">Call Now</span>
+                </a>
+
+                <a href="https://www.instagram.com/ommensfashion" 
+                   target="_blank"
+                   onclick="triggerHaptic()"
+                   class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group col-span-2">
+                    <i data-lucide="instagram" class="w-6 h-6 text-pink-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs font-semibold uppercase tracking-wider">Instagram Portfolio</span>
+                </a>
+
+                <button onclick="downloadVCard()" 
+                        class="btn-action bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
+                    <i data-lucide="user-plus" class="w-5 h-5 text-amber-400"></i>
+                    <span class="text-xs font-bold uppercase tracking-wider">Save Contact</span>
+                </button>
+
+                <button onclick="shareCard()" 
+                        class="btn-action bg-violet-600 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-violet-500 transition-all">
+                    <i data-lucide="share-2" class="w-5 h-5 text-white"></i>
+                    <span class="text-xs font-bold uppercase tracking-wider">Share Card</span>
+                </button>
+            </div>
+
+            <!-- Social/Location Footer -->
+            <div class="mt-8 text-center">
+                <p class="text-gray-500 text-[10px] uppercase tracking-[0.3em]">Premium Mens Wear Store</p>
+                <div class="flex justify-center gap-6 mt-4">
+                    <button onclick="openAdminPrompt()" class="hover:text-violet-500 transition-colors">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+                    <i data-lucide="map-pin" class="w-4 h-4 text-gray-400"></i>
+                    <i data-lucide="truck" class="w-4 h-4 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN PASSWORD MODAL -->
+        <div id="adminModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+            <div class="glass p-8 w-full max-w-sm neon-border-violet text-center">
+                <i data-lucide="lock" class="w-12 h-12 text-violet-500 mx-auto mb-4"></i>
+                <h3 class="text-lg font-bold mb-4">Admin Access</h3>
+                <input type="password" id="adminPassword" placeholder="PIN" class="w-full px-4 py-3 rounded-xl mb-4 text-center tracking-[0.5em]">
+                <div class="flex gap-2">
+                    <button onclick="closeAdminModal()" class="flex-1 bg-white/5 py-3 rounded-xl text-sm font-bold">CANCEL</button>
+                    <button onclick="verifyAdmin()" class="flex-1 bg-violet-600 py-3 rounded-xl text-sm font-bold">UNLOCK</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECURE LEADS PANEL (The "Backend") -->
+        <div id="leadsPanel" class="hidden mt-8 glass p-6 border border-violet-500/30">
+            <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
+                <div>
+                    <p class="text-violet-500 uppercase tracking-widest font-bold text-xs">Customer Leads</p>
+                    <p id="leadCount" class="text-[10px] text-gray-500">Total: 0</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="exportLeads()" class="text-[10px] bg-green-600/20 text-green-400 border border-green-500/30 px-2 py-1 rounded">EXPORT CSV</button>
+                    <button onclick="logoutAdmin()" class="text-[10px] text-gray-500 border border-gray-800 px-2 py-1 rounded">CLOSE</button>
+                </div>
+            </div>
+            <div id="leadsList" class="text-[10px] font-mono text-gray-400 space-y-2 max-h-64 overflow-y-auto pr-2">
+                No data captured yet.
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION BOX -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 glass px-6 py-3 rounded-full text-xs font-bold shadow-2xl opacity-0 transition-all duration-300 pointer-events-none z-50">
+        Message
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function triggerHaptic() {
+            if (window.navigator.vibrate) window.navigator.vibrate([10, 30, 10]);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('fade-in');
+            setTimeout(() => toast.classList.remove('fade-in'), 3000);
+        }
+
+        // Form Logic
+        document.getElementById('leadForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            triggerHaptic();
+
+            const leadData = {
+                name: document.getElementById('userName').value,
+                phone: document.getElementById('userPhone').value,
+                timestamp: new Date().toLocaleString()
+            };
+
+            saveLeadLocally(leadData);
+
+            const gate = document.getElementById('gatekeeper');
+            const dash = document.getElementById('dashboard');
+
+            gate.classList.add('fade-out');
+            setTimeout(() => {
+                gate.style.display = 'none';
+                dash.style.display = 'block';
+                setTimeout(() => {
+                    dash.classList.add('fade-in');
+                    showToast(`Welcome to Om Mens Fashion!`);
+                }, 50);
+            }, 600);
+        });
+
+        // "Backend" Storage Logic
+        function saveLeadLocally(data) {
+            let leads = JSON.parse(localStorage.getItem('om_leads') || '[]');
+            leads.unshift(data); // Newest leads first
+            // Limit check to preserve storage (300 limit)
+            if (leads.length > 500) leads.pop(); 
+            localStorage.setItem('om_leads', JSON.stringify(leads));
+            refreshLeadsList();
+        }
+
+        function refreshLeadsList() {
+            let leads = JSON.parse(localStorage.getItem('om_leads') || '[]');
+            const list = document.getElementById('leadsList');
+            const countLabel = document.getElementById('leadCount');
+            
+            countLabel.textContent = `Total: ${leads.length}`;
+
+            if (leads.length === 0) {
+                list.innerHTML = "No leads captured yet.";
+            } else {
+                list.innerHTML = leads.map(l => `
+                    <div class="border-b border-white/5 pb-2">
+                        <div class="text-violet-400 font-bold">${l.name}</div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-200">${l.phone}</span>
+                            <span class="opacity-30 text-[8px]">${l.timestamp}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Admin Security
+        function openAdminPrompt() {
+            const modal = document.getElementById('adminModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('fade-in'), 10);
+            document.getElementById('adminPassword').focus();
+        }
+
+        function closeAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.remove('fade-in');
+            setTimeout(() => modal.style.display = 'none', 300);
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function verifyAdmin() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === 'vinod0000') {
+                closeAdminModal();
+                document.getElementById('leadsPanel').classList.remove('hidden');
+                refreshLeadsList();
+                showToast("Access Granted, Mr. Yadav");
+                setTimeout(() => document.getElementById('leadsPanel').scrollIntoView({ behavior: 'smooth' }), 400);
+            } else {
+                triggerHaptic();
+                showToast("Access Denied");
+            }
+        }
+
+        function exportLeads() {
+            let leads = JSON.parse(localStorage.getItem('om_leads') || '[]');
+            if (leads.length === 0) return showToast("No leads to export");
+            
+            let csvContent = "data:text/csv;charset=utf-8,Name,Phone,Date\n";
+            leads.forEach(l => {
+                csvContent += `"${l.name}","${l.phone}","${l.timestamp}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Om_Mens_Fashion_Leads_${new Date().toLocaleDateString()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("CSV Exported!");
+        }
+
+        function logoutAdmin() {
+            document.getElementById('leadsPanel').classList.add('hidden');
+            showToast("Admin Panel Closed");
+        }
+
+        function downloadVCard() {
+            triggerHaptic();
+            const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Vinod Yadav - Om Mens Fashion\nORG:Om Mens Fashion\nTEL;TYPE=WORK,VOICE:+917793036608\nURL:https://www.instagram.com/ommensfashion\nNOTE:Premium Men's Clothing Store\nEND:VCARD`;
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Vinod_Yadav_OM.vcf';
+            a.click();
+            showToast("Contact card saved!");
+        }
+
+        async function shareCard() {
+            triggerHaptic();
+            try {
+                if (navigator.share) {
+                    await navigator.share({
+                        title: 'Om Mens Fashion',
+                        text: 'Connect with Om Mens Fashion by Vinod Yadav.',
+                        url: window.location.href
+                    });
+                } else {
+                    const dummy = document.createElement('input');
+                    document.body.appendChild(dummy);
+                    dummy.value = window.location.href;
+                    dummy.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(dummy);
+                    showToast("Link copied to clipboard!");
+                }
+            } catch (err) {}
+        }
+    </script>
+</body>
+</html>
