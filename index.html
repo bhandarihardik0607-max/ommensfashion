@@ -16,6 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
@@ -33,9 +35,7 @@
             min-height: 100vh;
         }
 
-        h1, h2, .font-display {
-            font-family: 'Montserrat', sans-serif;
-        }
+        h1, h2, .font-display { font-family: 'Montserrat', sans-serif; }
 
         .bg-glow {
             position: fixed;
@@ -61,43 +61,19 @@
             border: 1px solid rgba(139, 92, 246, 0.5);
         }
 
-        .btn-action {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .btn-action { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-action:active { transform: scale(0.95); }
 
-        .btn-action:active {
-            transform: scale(0.95);
-        }
+        .fade-out { opacity: 0; transform: translateY(-20px); pointer-events: none; transition: all 0.6s ease; }
+        .fade-in { opacity: 1 !important; transform: translateY(0) !important; pointer-events: auto !important; }
 
-        .fade-out {
-            opacity: 0;
-            transform: translateY(-20px);
-            pointer-events: none;
-            transition: all 0.6s ease;
-        }
-
-        .fade-in {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-            pointer-events: auto !important;
-        }
-
-        #dashboard, #adminModal {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            display: none;
-        }
+        #dashboard, #adminModal { opacity: 0; transform: translateY(20px); pointer-events: none; display: none; }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
         }
-
-        .float-anim {
-            animation: float 4s ease-in-out infinite;
-        }
+        .float-anim { animation: float 4s ease-in-out infinite; }
 
         input {
             background: rgba(255, 255, 255, 0.05) !important;
@@ -105,7 +81,6 @@
             color: white !important;
             transition: all 0.3s ease;
         }
-
         input:focus {
             border-color: var(--neon-violet) !important;
             box-shadow: 0 0 10px rgba(139, 92, 246, 0.2) !important;
@@ -153,24 +128,20 @@
         <!-- SECTION 2: THE DIGITAL CARD DASHBOARD -->
         <div id="dashboard" class="transition-all duration-700">
             <div class="glass p-6 mb-6 relative overflow-hidden float-anim neon-border-violet">
-                <div class="absolute top-0 right-0 p-4 opacity-20">
-                    <i data-lucide="layers" class="w-20 h-20"></i>
-                </div>
+                <div class="absolute top-0 right-0 p-4 opacity-20"><i data-lucide="layers" class="w-20 h-20"></i></div>
                 <div class="flex justify-between items-start mb-12">
                     <div>
                         <p class="text-[10px] uppercase tracking-[0.2em] text-violet-400 font-bold">Premium Member</p>
                         <h2 class="text-2xl font-black uppercase tracking-tight">Om Mens Fashion</h2>
                     </div>
-                    <div class="text-amber-400">
-                        <i data-lucide="award" class="w-8 h-8"></i>
-                    </div>
+                    <div class="text-amber-400"><i data-lucide="award" class="w-8 h-8"></i></div>
                 </div>
                 <div class="space-y-1">
                     <p class="text-xs text-gray-500 uppercase tracking-widest">Store Owner</p>
                     <p class="text-xl font-display font-semibold tracking-wide">Mr. Vinod Yadav</p>
                 </div>
                 <div class="mt-8 flex justify-between items-end">
-                    <div class="text-[10px] text-gray-500 font-mono">SERIAL: VIN-YADAV-001</div>
+                    <div class="text-[10px] text-gray-500 font-mono uppercase">Serial: Vin-Yadav-001</div>
                     <div class="flex gap-1">
                         <div class="w-8 h-5 bg-violet-500/20 rounded-sm"></div>
                         <div class="w-8 h-5 bg-amber-500/20 rounded-sm"></div>
@@ -180,31 +151,27 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <a href="https://wa.me/917793036608?text=Hey%20Om%20Mens%20Fashion" 
-                   onclick="triggerHaptic()"
-                   class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group">
-                    <i data-lucide="message-circle" class="w-6 h-6 text-green-400 group-hover:scale-110 transition-transform"></i>
+                   onclick="triggerHaptic()" class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group">
+                    <i data-lucide="message-circle" class="w-6 h-6 text-green-400"></i>
                     <span class="text-xs font-semibold uppercase tracking-wider">WhatsApp</span>
                 </a>
                 <a href="tel:+917793036608" 
-                   onclick="triggerHaptic()"
-                   class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group">
-                    <i data-lucide="phone" class="w-6 h-6 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                   onclick="triggerHaptic()" class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group">
+                    <i data-lucide="phone" class="w-6 h-6 text-blue-400"></i>
                     <span class="text-xs font-semibold uppercase tracking-wider">Call Now</span>
                 </a>
-                <a href="https://www.instagram.com/ommensfashion" 
-                   target="_blank"
-                   onclick="triggerHaptic()"
-                   class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group col-span-2">
-                    <i data-lucide="instagram" class="w-6 h-6 text-pink-500 group-hover:scale-110 transition-transform"></i>
+                <a href="https://www.instagram.com/ommensfashion" target="_blank"
+                   onclick="triggerHaptic()" class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group col-span-2">
+                    <i data-lucide="instagram" class="w-6 h-6 text-pink-500"></i>
                     <span class="text-xs font-semibold uppercase tracking-wider">Instagram Portfolio</span>
                 </a>
                 <button onclick="downloadVCard()" class="btn-action bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
                     <i data-lucide="user-plus" class="w-5 h-5 text-amber-400"></i>
-                    <span class="text-xs font-bold uppercase tracking-wider">Save Contact</span>
+                    <span class="text-xs font-bold uppercase tracking-wider">Save</span>
                 </button>
                 <button onclick="shareCard()" class="btn-action bg-violet-600 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-violet-500 transition-all">
                     <i data-lucide="share-2" class="w-5 h-5 text-white"></i>
-                    <span class="text-xs font-bold uppercase tracking-wider">Share Card</span>
+                    <span class="text-xs font-bold uppercase tracking-wider">Share</span>
                 </button>
             </div>
 
@@ -237,7 +204,7 @@
         <div id="leadsPanel" class="hidden mt-8 glass p-6 border border-violet-500/30">
             <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
                 <div>
-                    <p class="text-violet-500 uppercase tracking-widest font-bold text-xs">Cloud Database</p>
+                    <p class="text-violet-500 uppercase tracking-widest font-bold text-xs">Supabase Database</p>
                     <p id="leadCount" class="text-[10px] text-gray-500">Connecting...</p>
                 </div>
                 <div class="flex gap-2">
@@ -246,7 +213,7 @@
                 </div>
             </div>
             <div id="leadsList" class="text-[10px] font-mono text-gray-400 space-y-2 max-h-64 overflow-y-auto pr-2">
-                No leads yet.
+                Syncing with Supabase...
             </div>
         </div>
     </div>
@@ -255,53 +222,17 @@
         Message
     </div>
 
-    <!-- FIREBASE MODULES -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    <script>
+        // SUPABASE CONFIGURATION
+        const SB_URL = "https://zwenabaihmcmrguiktaw.supabase.co";
+        const SB_KEY = "sb_publishable_i05XCyPZRlwehIixgQpyaQ_VFV1Q3cX";
+        
+        // Initialize Client
+        const _supabase = supabase.createClient(SB_URL, SB_KEY);
 
-        // Environment Variables
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-
-        let currentUser = null;
         let allLeads = [];
-        let leadsUnsubscribe = null;
 
-        // Authentication Flow (Mandatory Pattern)
-        const initAuth = async () => {
-            try {
-                if (initialToken) {
-                    await signInWithCustomToken(auth, initialToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                console.error("Auth initialization failed:", error);
-                // Fallback attempt
-                try { await signInAnonymously(auth); } catch(e) {}
-            }
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            // If the admin panel is already visible, start listener
-            if (user && !document.getElementById('leadsPanel').classList.contains('hidden')) {
-                startLeadListener();
-            }
-        });
-
-        // Start Authentication process
-        initAuth();
-
-        // Icon Initialization
+        // UI Initializations
         lucide.createIcons();
 
         // Helpers
@@ -314,15 +245,9 @@
             setTimeout(() => toast.classList.remove('fade-in'), 3000);
         };
 
-        // Lead Submission
+        // LEAD SUBMISSION (To Supabase)
         document.getElementById('leadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            // Critical check: Ensure user is authenticated before writing
-            if (!currentUser) {
-                showToast("Still connecting... please wait a second.");
-                return;
-            }
             
             triggerHaptic();
             const submitBtn = document.getElementById('submitBtn');
@@ -338,29 +263,34 @@
             };
 
             try {
-                // Ensure path follows mandatory rules
-                const leadsRef = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
-                await addDoc(leadsRef, lead);
+                // IMPORTANT: Ensure you have a table named 'leads' in Supabase with columns: name, phone, timestamp
+                const { data, error } = await _supabase
+                    .from('leads')
+                    .insert([lead]);
+
+                if (error) throw error;
                 
-                // Transition UI on success
+                // Transition UI
                 const gate = document.getElementById('gatekeeper');
                 const dash = document.getElementById('dashboard');
                 gate.classList.add('fade-out');
                 setTimeout(() => {
                     gate.style.display = 'none';
                     dash.style.display = 'block';
-                    setTimeout(() => dash.classList.add('fade-in'), 50);
-                    showToast("Access Unlocked!");
+                    setTimeout(() => {
+                        dash.classList.add('fade-in');
+                        showToast("Access Unlocked!");
+                    }, 50);
                 }, 600);
             } catch (err) {
-                console.error("Database Write Error:", err);
-                showToast("Connection error. Please try again.");
+                console.error("Supabase Error:", err);
+                showToast("Connection failed. Check your table setup.");
                 submitBtn.disabled = false;
                 btnText.textContent = "ENTER DASHBOARD";
             }
         });
 
-        // Admin Security & View
+        // ADMIN CONTROLS
         window.openAdminPrompt = () => {
             const modal = document.getElementById('adminModal');
             modal.style.display = 'flex';
@@ -374,104 +304,86 @@
             setTimeout(() => modal.style.display = 'none', 300);
         };
 
-        window.verifyAdmin = () => {
+        window.verifyAdmin = async () => {
             if (document.getElementById('adminPassword').value === 'vinod0000') {
                 closeAdminModal();
                 document.getElementById('leadsPanel').classList.remove('hidden');
-                startLeadListener();
-                showToast("Admin Session Started");
+                await syncLeads();
+                showToast("Admin access granted.");
             } else {
                 triggerHaptic();
-                showToast("Incorrect PIN");
+                showToast("Invalid PIN");
             }
         };
 
-        function startLeadListener() {
-            // Guard: Must be authenticated and not already listening
-            if (!currentUser || leadsUnsubscribe) return;
+        async function syncLeads() {
+            try {
+                const { data, error } = await _supabase
+                    .from('leads')
+                    .select('*')
+                    .order('timestamp', { ascending: false });
 
-            const leadsRef = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
-            
-            // Simple query only (no complex filters to avoid index requirements)
-            leadsUnsubscribe = onSnapshot(leadsRef, (snapshot) => {
-                allLeads = snapshot.docs.map(doc => doc.data())
-                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                
+                if (error) throw error;
+
+                allLeads = data;
                 const list = document.getElementById('leadsList');
                 const count = document.getElementById('leadCount');
-                count.textContent = `Total Leads: ${allLeads.length}`;
+                count.textContent = `Total: ${allLeads.length}`;
                 
                 if (allLeads.length === 0) {
-                    list.innerHTML = `<div class="py-4 text-center opacity-30">No leads found in cloud database.</div>`;
+                    list.innerHTML = `<div class="py-10 text-center opacity-20 italic">No leads in Supabase yet.</div>`;
                 } else {
                     list.innerHTML = allLeads.map(l => `
-                        <div class="border-b border-white/5 pb-2 animate-pulse-once">
+                        <div class="border-b border-white/5 pb-2">
                             <div class="text-violet-400 font-bold">${l.name}</div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-200">${l.phone}</span>
-                                <span class="opacity-30 text-[8px] uppercase">${new Date(l.timestamp).toLocaleDateString()}</span>
+                            <div class="flex justify-between items-center text-[9px]">
+                                <span class="text-gray-300">${l.phone}</span>
+                                <span class="opacity-30 uppercase">${new Date(l.timestamp).toLocaleDateString()}</span>
                             </div>
                         </div>
                     `).join('');
                 }
-            }, (error) => {
-                console.error("Firestore Snapshot Error:", error);
-                showToast("Error syncing leads.");
-            });
+            } catch (err) {
+                console.error("Fetch Error:", err);
+                document.getElementById('leadsList').innerHTML = "Failed to sync. Check table permissions.";
+            }
         }
 
         window.logoutAdmin = () => {
-            if (leadsUnsubscribe) {
-                leadsUnsubscribe();
-                leadsUnsubscribe = null;
-            }
             document.getElementById('leadsPanel').classList.add('hidden');
-            showToast("Admin Panel Closed");
         };
 
         window.exportLeads = () => {
-            if (allLeads.length === 0) return showToast("No leads available for export.");
-            let csv = "Name,Phone,Date Submitted\n";
+            if (allLeads.length === 0) return;
+            let csv = "Name,Phone,Timestamp\n";
             allLeads.forEach(l => csv += `"${l.name}","${l.phone}","${l.timestamp}"\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `Leads_OmMensFashion_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `Leads_Supabase_OM.csv`;
             a.click();
             window.URL.revokeObjectURL(url);
         };
 
         window.downloadVCard = () => {
             triggerHaptic();
-            const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Vinod Yadav - Om Mens Fashion\nTEL;TYPE=WORK,VOICE:+917793036608\nNOTE:Owner of Om Mens Fashion\nEND:VCARD`;
+            const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Vinod Yadav\nTEL;TYPE=WORK,VOICE:+917793036608\nNOTE:Om Mens Fashion\nEND:VCARD`;
             const blob = new Blob([vcard], { type: 'text/vcard' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Vinod_Yadav_OM.vcf';
+            a.download = 'Vinod_Yadav.vcf';
             a.click();
-            window.URL.revokeObjectURL(url);
         };
 
         window.shareCard = async () => {
             triggerHaptic();
             if (navigator.share) {
-                try {
-                    await navigator.share({ 
-                        title: 'Om Mens Fashion', 
-                        text: 'Connect with Om Mens Fashion by Vinod Yadav.',
-                        url: window.location.href 
-                    });
-                } catch (e) {}
+                try { await navigator.share({ title: 'Om Mens Fashion', url: window.location.href }); } catch(e) {}
             } else {
-                const temp = document.createElement('input');
-                document.body.appendChild(temp);
-                temp.value = window.location.href;
-                temp.select();
-                document.execCommand('copy');
-                document.body.removeChild(temp);
-                showToast("Link copied to clipboard!");
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Link copied!");
             }
         };
     </script>
