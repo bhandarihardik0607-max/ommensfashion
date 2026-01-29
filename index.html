@@ -141,8 +141,8 @@
                         <label class="block text-xs uppercase tracking-widest text-gray-500 mb-1 ml-1">Phone Number</label>
                         <input type="tel" id="userPhone" required placeholder="+91 00000 00000" class="w-full px-4 py-3 rounded-xl text-sm">
                     </div>
-                    <button type="submit" class="w-full bg-violet-600 hover:bg-violet-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-violet-900/20 transition-all mt-4 flex items-center justify-center gap-2 group">
-                        ENTER DASHBOARD
+                    <button type="submit" id="submitBtn" class="w-full bg-violet-600 hover:bg-violet-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-violet-900/20 transition-all mt-4 flex items-center justify-center gap-2 group">
+                        <span id="btnText">ENTER DASHBOARD</span>
                         <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                     </button>
                 </form>
@@ -152,12 +152,10 @@
 
         <!-- SECTION 2: THE DIGITAL CARD DASHBOARD -->
         <div id="dashboard" class="transition-all duration-700">
-            <!-- Glassmorphism "Credit Card" style -->
             <div class="glass p-6 mb-6 relative overflow-hidden float-anim neon-border-violet">
                 <div class="absolute top-0 right-0 p-4 opacity-20">
                     <i data-lucide="layers" class="w-20 h-20"></i>
                 </div>
-                
                 <div class="flex justify-between items-start mb-12">
                     <div>
                         <p class="text-[10px] uppercase tracking-[0.2em] text-violet-400 font-bold">Premium Member</p>
@@ -167,16 +165,12 @@
                         <i data-lucide="award" class="w-8 h-8"></i>
                     </div>
                 </div>
-
                 <div class="space-y-1">
                     <p class="text-xs text-gray-500 uppercase tracking-widest">Store Owner</p>
                     <p class="text-xl font-display font-semibold tracking-wide">Mr. Vinod Yadav</p>
                 </div>
-
                 <div class="mt-8 flex justify-between items-end">
-                    <div class="text-[10px] text-gray-500 font-mono">
-                        SERIAL: VIN-YADAV-001
-                    </div>
+                    <div class="text-[10px] text-gray-500 font-mono">SERIAL: VIN-YADAV-001</div>
                     <div class="flex gap-1">
                         <div class="w-8 h-5 bg-violet-500/20 rounded-sm"></div>
                         <div class="w-8 h-5 bg-amber-500/20 rounded-sm"></div>
@@ -184,7 +178,6 @@
                 </div>
             </div>
 
-            <!-- Action Grid -->
             <div class="grid grid-cols-2 gap-4">
                 <a href="https://wa.me/917793036608?text=Hey%20Om%20Mens%20Fashion" 
                    onclick="triggerHaptic()"
@@ -192,14 +185,12 @@
                     <i data-lucide="message-circle" class="w-6 h-6 text-green-400 group-hover:scale-110 transition-transform"></i>
                     <span class="text-xs font-semibold uppercase tracking-wider">WhatsApp</span>
                 </a>
-                
                 <a href="tel:+917793036608" 
                    onclick="triggerHaptic()"
                    class="btn-action glass p-4 flex flex-col items-center justify-center gap-2 hover:bg-violet-600/20 group">
                     <i data-lucide="phone" class="w-6 h-6 text-blue-400 group-hover:scale-110 transition-transform"></i>
                     <span class="text-xs font-semibold uppercase tracking-wider">Call Now</span>
                 </a>
-
                 <a href="https://www.instagram.com/ommensfashion" 
                    target="_blank"
                    onclick="triggerHaptic()"
@@ -207,21 +198,16 @@
                     <i data-lucide="instagram" class="w-6 h-6 text-pink-500 group-hover:scale-110 transition-transform"></i>
                     <span class="text-xs font-semibold uppercase tracking-wider">Instagram Portfolio</span>
                 </a>
-
-                <button onclick="downloadVCard()" 
-                        class="btn-action bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
+                <button onclick="downloadVCard()" class="btn-action bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
                     <i data-lucide="user-plus" class="w-5 h-5 text-amber-400"></i>
                     <span class="text-xs font-bold uppercase tracking-wider">Save Contact</span>
                 </button>
-
-                <button onclick="shareCard()" 
-                        class="btn-action bg-violet-600 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-violet-500 transition-all">
+                <button onclick="shareCard()" class="btn-action bg-violet-600 p-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-violet-500 transition-all">
                     <i data-lucide="share-2" class="w-5 h-5 text-white"></i>
                     <span class="text-xs font-bold uppercase tracking-wider">Share Card</span>
                 </button>
             </div>
 
-            <!-- Social/Location Footer -->
             <div class="mt-8 text-center">
                 <p class="text-gray-500 text-[10px] uppercase tracking-[0.3em]">Premium Mens Wear Store</p>
                 <div class="flex justify-center gap-6 mt-4">
@@ -234,7 +220,7 @@
             </div>
         </div>
 
-        <!-- ADMIN PASSWORD MODAL -->
+        <!-- ADMIN MODAL -->
         <div id="adminModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
             <div class="glass p-8 w-full max-w-sm neon-border-violet text-center">
                 <i data-lucide="lock" class="w-12 h-12 text-violet-500 mx-auto mb-4"></i>
@@ -247,187 +233,205 @@
             </div>
         </div>
 
-        <!-- SECURE LEADS PANEL (The "Backend") -->
+        <!-- SECURE LEADS PANEL -->
         <div id="leadsPanel" class="hidden mt-8 glass p-6 border border-violet-500/30">
             <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
                 <div>
-                    <p class="text-violet-500 uppercase tracking-widest font-bold text-xs">Customer Leads</p>
-                    <p id="leadCount" class="text-[10px] text-gray-500">Total: 0</p>
+                    <p class="text-violet-500 uppercase tracking-widest font-bold text-xs">Cloud Database</p>
+                    <p id="leadCount" class="text-[10px] text-gray-500">Connecting...</p>
                 </div>
                 <div class="flex gap-2">
-                    <button onclick="exportLeads()" class="text-[10px] bg-green-600/20 text-green-400 border border-green-500/30 px-2 py-1 rounded">EXPORT CSV</button>
+                    <button onclick="exportLeads()" class="text-[10px] bg-green-600/20 text-green-400 border border-green-500/30 px-2 py-1 rounded">CSV</button>
                     <button onclick="logoutAdmin()" class="text-[10px] text-gray-500 border border-gray-800 px-2 py-1 rounded">CLOSE</button>
                 </div>
             </div>
             <div id="leadsList" class="text-[10px] font-mono text-gray-400 space-y-2 max-h-64 overflow-y-auto pr-2">
-                No data captured yet.
+                No leads yet.
             </div>
         </div>
     </div>
 
-    <!-- NOTIFICATION BOX -->
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 glass px-6 py-3 rounded-full text-xs font-bold shadow-2xl opacity-0 transition-all duration-300 pointer-events-none z-50">
         Message
     </div>
 
-    <script>
+    <!-- FIREBASE MODULES -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Global environment variables
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Init Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        let user = null;
+        let allLeads = [];
+
+        // Auth Setup
+        const initAuth = async () => {
+            try {
+                await signInAnonymously(auth);
+            } catch (e) {
+                console.error("Auth error", e);
+            }
+        };
+        initAuth();
+
+        onAuthStateChanged(auth, (u) => {
+            user = u;
+            if (user && document.getElementById('leadsPanel').classList.contains('hidden') === false) {
+                startLeadListener();
+            }
+        });
+
+        // Icon Init
         lucide.createIcons();
 
-        function triggerHaptic() {
-            if (window.navigator.vibrate) window.navigator.vibrate([10, 30, 10]);
-        }
-
-        function showToast(msg) {
+        // Helpers
+        window.triggerHaptic = () => { if (window.navigator.vibrate) window.navigator.vibrate([10, 30, 10]); };
+        
+        window.showToast = (msg) => {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.add('fade-in');
             setTimeout(() => toast.classList.remove('fade-in'), 3000);
-        }
+        };
 
-        // Form Logic
-        document.getElementById('leadForm').addEventListener('submit', (e) => {
+        // Lead Submission
+        document.getElementById('leadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (!user) return showToast("Connecting to cloud... try again");
+            
             triggerHaptic();
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            
+            submitBtn.disabled = true;
+            btnText.textContent = "SAVING...";
 
-            const leadData = {
+            const lead = {
                 name: document.getElementById('userName').value,
                 phone: document.getElementById('userPhone').value,
-                timestamp: new Date().toLocaleString()
+                timestamp: new Date().toISOString()
             };
 
-            saveLeadLocally(leadData);
-
-            const gate = document.getElementById('gatekeeper');
-            const dash = document.getElementById('dashboard');
-
-            gate.classList.add('fade-out');
-            setTimeout(() => {
-                gate.style.display = 'none';
-                dash.style.display = 'block';
+            try {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'leads'), lead);
+                
+                // Switch UI
+                const gate = document.getElementById('gatekeeper');
+                const dash = document.getElementById('dashboard');
+                gate.classList.add('fade-out');
                 setTimeout(() => {
-                    dash.classList.add('fade-in');
-                    showToast(`Welcome to Om Mens Fashion!`);
-                }, 50);
-            }, 600);
+                    gate.style.display = 'none';
+                    dash.style.display = 'block';
+                    setTimeout(() => dash.classList.add('fade-in'), 50);
+                }, 600);
+            } catch (err) {
+                console.error(err);
+                showToast("Connection error. Try again.");
+                submitBtn.disabled = false;
+                btnText.textContent = "ENTER DASHBOARD";
+            }
         });
 
-        // "Backend" Storage Logic
-        function saveLeadLocally(data) {
-            let leads = JSON.parse(localStorage.getItem('om_leads') || '[]');
-            leads.unshift(data); // Newest leads first
-            // Limit check to preserve storage (300 limit)
-            if (leads.length > 500) leads.pop(); 
-            localStorage.setItem('om_leads', JSON.stringify(leads));
-            refreshLeadsList();
-        }
-
-        function refreshLeadsList() {
-            let leads = JSON.parse(localStorage.getItem('om_leads') || '[]');
-            const list = document.getElementById('leadsList');
-            const countLabel = document.getElementById('leadCount');
-            
-            countLabel.textContent = `Total: ${leads.length}`;
-
-            if (leads.length === 0) {
-                list.innerHTML = "No leads captured yet.";
-            } else {
-                list.innerHTML = leads.map(l => `
-                    <div class="border-b border-white/5 pb-2">
-                        <div class="text-violet-400 font-bold">${l.name}</div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-200">${l.phone}</span>
-                            <span class="opacity-30 text-[8px]">${l.timestamp}</span>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // Admin Security
-        function openAdminPrompt() {
+        // Admin Logic
+        window.openAdminPrompt = () => {
             const modal = document.getElementById('adminModal');
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('fade-in'), 10);
             document.getElementById('adminPassword').focus();
-        }
+        };
 
-        function closeAdminModal() {
+        window.closeAdminModal = () => {
             const modal = document.getElementById('adminModal');
             modal.classList.remove('fade-in');
             setTimeout(() => modal.style.display = 'none', 300);
-            document.getElementById('adminPassword').value = '';
-        }
+        };
 
-        function verifyAdmin() {
-            const pass = document.getElementById('adminPassword').value;
-            if (pass === 'vinod0000') {
+        window.verifyAdmin = () => {
+            if (document.getElementById('adminPassword').value === 'vinod0000') {
                 closeAdminModal();
                 document.getElementById('leadsPanel').classList.remove('hidden');
-                refreshLeadsList();
-                showToast("Access Granted, Mr. Yadav");
-                setTimeout(() => document.getElementById('leadsPanel').scrollIntoView({ behavior: 'smooth' }), 400);
+                startLeadListener();
+                showToast("Logged into Cloud DB");
             } else {
                 triggerHaptic();
-                showToast("Access Denied");
+                showToast("Invalid PIN");
             }
-        }
+        };
 
-        function exportLeads() {
-            let leads = JSON.parse(localStorage.getItem('om_leads') || '[]');
-            if (leads.length === 0) return showToast("No leads to export");
-            
-            let csvContent = "data:text/csv;charset=utf-8,Name,Phone,Date\n";
-            leads.forEach(l => {
-                csvContent += `"${l.name}","${l.phone}","${l.timestamp}"\n`;
+        function startLeadListener() {
+            if (!user) return;
+            const q = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
+            onSnapshot(q, (snapshot) => {
+                allLeads = snapshot.docs.map(doc => doc.data())
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                const list = document.getElementById('leadsList');
+                const count = document.getElementById('leadCount');
+                count.textContent = `Total Leads: ${allLeads.length}`;
+                
+                if (allLeads.length === 0) {
+                    list.innerHTML = "No leads found in cloud.";
+                } else {
+                    list.innerHTML = allLeads.map(l => `
+                        <div class="border-b border-white/5 pb-2">
+                            <div class="text-violet-400 font-bold">${l.name}</div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">${l.phone}</span>
+                                <span class="opacity-30 text-[8px]">${new Date(l.timestamp).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }, (error) => {
+                console.error("Listener error", error);
             });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Om_Mens_Fashion_Leads_${new Date().toLocaleDateString()}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showToast("CSV Exported!");
         }
 
-        function logoutAdmin() {
+        window.exportLeads = () => {
+            if (allLeads.length === 0) return showToast("No leads to export");
+            let csv = "Name,Phone,Date\n";
+            allLeads.forEach(l => csv += `"${l.name}","${l.phone}","${l.timestamp}"\n`);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Leads_Vinod_Yadav.csv`;
+            a.click();
+        };
+
+        window.logoutAdmin = () => {
             document.getElementById('leadsPanel').classList.add('hidden');
-            showToast("Admin Panel Closed");
-        }
+        };
 
-        function downloadVCard() {
+        window.downloadVCard = () => {
             triggerHaptic();
-            const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Vinod Yadav - Om Mens Fashion\nORG:Om Mens Fashion\nTEL;TYPE=WORK,VOICE:+917793036608\nURL:https://www.instagram.com/ommensfashion\nNOTE:Premium Men's Clothing Store\nEND:VCARD`;
+            const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Vinod Yadav - Om Mens Fashion\nTEL;TYPE=WORK,VOICE:+917793036608\nEND:VCARD`;
             const blob = new Blob([vcard], { type: 'text/vcard' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Vinod_Yadav_OM.vcf';
+            a.download = 'Vinod_Yadav.vcf';
             a.click();
-            showToast("Contact card saved!");
-        }
+        };
 
-        async function shareCard() {
+        window.shareCard = async () => {
             triggerHaptic();
-            try {
-                if (navigator.share) {
-                    await navigator.share({
-                        title: 'Om Mens Fashion',
-                        text: 'Connect with Om Mens Fashion by Vinod Yadav.',
-                        url: window.location.href
-                    });
-                } else {
-                    const dummy = document.createElement('input');
-                    document.body.appendChild(dummy);
-                    dummy.value = window.location.href;
-                    dummy.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(dummy);
-                    showToast("Link copied to clipboard!");
-                }
-            } catch (err) {}
-        }
+            if (navigator.share) {
+                await navigator.share({ title: 'Om Mens Fashion', url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Link copied!");
+            }
+        };
     </script>
 </body>
 </html>
